@@ -20,8 +20,13 @@ class TotalViewModel : ViewModel() {
     }
 
     // 4. Fungsi increment-nya sekarang ngubah nilai si _total
+    // ... (di dalem class TotalViewModel) ...
+
     fun incrementTotal() {
-        // Ambil nilai sekarang, tambahin 1, terus post lagi
         _total.postValue(_total.value?.plus(1))
+    }
+
+    fun setTotal(newTotal: Int) {
+        _total.postValue(newTotal)
     }
 }
