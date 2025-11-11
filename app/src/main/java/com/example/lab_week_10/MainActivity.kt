@@ -29,17 +29,19 @@ class MainActivity : AppCompatActivity() {
 
     // Fungsi baru buat ngurusin ViewModel
     private fun setupViewModel() {
-        // 1. Tampilkan nilai awal dari ViewModel
-        // 'total' di sini ngambil dari 'var total' di TotalViewModel
-        updateText(viewModel.total)
+        // 1. Kita 'observe' data 'total'
+        // 'this' nunjuk ke 'Activity' sebagai 'LifecycleOwner'
+        viewModel.total.observe(this) { total ->
+            // Tiap data 'total' di ViewModel berubah, 'updateText' kepanggil
+            updateText(total)
+        }
 
         // 2. Set listener buat button
         findViewById<Button>(R.id.button_increment).setOnClickListener {
-            // Panggil fungsi di ViewModel, bukan incrementTotal() lokal lagi
-            // Ini manggil 'incrementTotal()' di TotalViewModel [cite: 102]
+            // Kita CUMA manggil incrementTotal().
+            // Gak perlu 'updateText' manual lagi!
+            // LiveData bakal ngurusin itu otomatis.
             viewModel.incrementTotal()
-            // 3. Update text-nya pake data terbaru dari ViewModel
-            updateText(viewModel.total)
         }
     }
 }
